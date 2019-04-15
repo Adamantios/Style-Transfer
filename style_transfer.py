@@ -10,34 +10,61 @@ from PIL import Image
 
 
 def style_transfer():
+    # Initialize optimizer.
     optimizer = LBFGSOptimizer(content_image.height, content_image.width, f_outs)
 
-    x = StyleTransferVGG19.preprocess_image(content_image).flatten()
-    frames = []
-    for i in range(args.iter):
-        print('Start of iteration', i + 1)
-        start_time = time.time()
-        x, f = optimizer.run(x, 20)
-        print('Current loss value:', f)
-        # save current generated image
-        img = model.deprocess_image(x)
-        frames.append(Image.fromarray(img))
-        end_time = time.time()
-        print('Iteration %d completed in %ds' % (i + 1, end_time - start_time))
+    # Preprocess image using the model's procedure and flatten it.
+    x = model.preprocess_image(content_image).flatten()
 
-    filename = args.combined_filename + '.png'
-    save_img(filename, frames[-1])
-    print("Image saved as '{}'".format(filename))
+    # Create image's filename.
+    img_filename = combined_filename + '.png'
 
-    if args.gif:
-        filename = args.combined_filename + '.gif'
+    if gif:
+        # Create frames array.
+        frames = []
+        # Initialize gif's filename.
+        gif_filename = combined_filename + '.gif'
+        for frame in range(n_frames):
+            print('Creating frame {}'.format(frame + 1))
+            # Start timer.
+            start_time = time.time()
+            # Run the optimizer.
+            x, f = optimizer.run(x, n_iter)
+            print('Current loss value:', f)
+            # Deprocess result, in order to get a valid image.
+            img = model.deprocess_image(x)
+            # Save current frame.
+            frames.append(Image.fromarray(img))
+            # Stop timer.
+            end_time = time.time()
+            print('Frame {} created in {} seconds'.format(frame + 1, end_time - start_time))
 
         try:
-            # Save into a GIF file that loops forever
-            frames[0].save(filename, format='GIF', append_images=frames[1:], save_all=True, duration=100, loop=0)
-            print("A GIF of the style transfer steps has been saved as '{}'".format(filename))
+            # Save frames into a GIF file that loops forever.
+            frames[0].save(gif_filename, format='GIF', append_images=frames[1:], save_all=True, duration=100, loop=0)
+            print("A GIF of the style transfer steps has been saved as '{}'".format(gif_filename))
         except ValueError or IOError:
             print('Something went wrong while trying to save the gif.')
+
+        # Save result.
+        save_img(img_filename, frames[-1])
+        print("Result image saved as '{}'".format(img_filename))
+
+    else:
+        print('Starting optimisation.')
+        # Start timer.
+        start_time = time.time()
+        # Run the optimizer.
+        x, f = optimizer.run(x, n_iter)
+        print('Current loss value:', f)
+        # Stop timer.
+        end_time = time.time()
+        print('Optimisation finished in {} seconds'.format(end_time - start_time))
+        # Deprocess result, in order to get a valid image.
+        img = model.deprocess_image(x)
+        # Save the image.
+        save_img(img_filename, img)
+        print("Image saved as '{}'".format(img_filename))
 
 
 if __name__ == '__main__':
@@ -47,6 +74,7 @@ if __name__ == '__main__':
     style_image_path = args.style_image_path
     combined_filename = args.combined_filename
     gif = args.gif
+    n_frames = args.frames
     n_iter = args.iter
     content_weight = args.content_weight
     style_weight = args.style_weight
