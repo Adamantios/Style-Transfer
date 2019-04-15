@@ -17,7 +17,7 @@ def create_parser() -> ArgumentParser:
     parser.add_argument('-i', '--iter', type=int, default=20, required=False,
                         help='Number of iterations for the optimizer.\n'
                              'If --gif is passed, this is the number of iterations for each frame.')
-    parser.add_argument('-g', '--gif', type=bool, default=False, required=False, action='store_true',
+    parser.add_argument('-g', '--gif', default=False, required=False, action='store_true',
                         help='Whether a gif of the procedure should be created.')
     parser.add_argument('-f', '--frames', type=int, default=10, required=False,
                         help='Number of the gif frames.\nIgnored if --gif is not passed.')
