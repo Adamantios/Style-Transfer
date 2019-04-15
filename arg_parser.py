@@ -14,10 +14,13 @@ def create_parser() -> ArgumentParser:
                         help='Path to the style image.')
     parser.add_argument('combined_filename', metavar='result', type=str,
                         help='Prefix for the saved image results.')
+    parser.add_argument('-i', '--iter', type=int, default=20, required=False,
+                        help='Number of iterations for the optimizer.\n'
+                             'If --gif is passed, this is the number of iterations for each frame.')
     parser.add_argument('-g', '--gif', type=bool, default=False, required=False, action='store_true',
                         help='Whether a gif of the procedure should be created.')
-    parser.add_argument('-i', '--iter', type=int, default=10, required=False,
-                        help='Number of iterations for the optimizer.')
+    parser.add_argument('-f', '--frames', type=int, default=10, required=False,
+                        help='Number of the gif frames.\nIgnored if --gif is not passed.')
     parser.add_argument('-cw', '--content_weight', type=float, default=0.025, required=False,
                         help='Content weight.')
     parser.add_argument('-sw', '--style_weight', type=float, default=1.0, required=False,
