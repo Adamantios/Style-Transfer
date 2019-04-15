@@ -91,7 +91,7 @@ if __name__ == '__main__':
     # Initialize loss calculator.
     loss_calculator = LossCalculator(model.combination_image, content_image.height, content_image.width,
                                      model.content_features_layer, model.style_features_layers,
-                                     args.content_weight, args.style_weight, args.tv_weight)
+                                     content_weight, style_weight, tv_weight)
     # Get loss and grads function.
     f_outs = loss_calculator.get_loss_and_grads()
 
