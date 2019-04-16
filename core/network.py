@@ -14,7 +14,7 @@ class StyleTransferVGG19(object):
         # Resize the style image corresponding to the content image.
         style_image = style_image.resize((width, height))
 
-        # Se the dimensions of the generated picture.
+        # Set the dimensions of the generated picture.
         self.img_nrows = height
         self.img_ncols = width
 
@@ -39,29 +39,40 @@ class StyleTransferVGG19(object):
                                                                                         'block3_conv1', 'block4_conv1',
                                                                                         'block5_conv1']]
 
-    # util function to open, resize and format pictures into appropriate tensors
-
     @staticmethod
     def preprocess_image(image):
+        """
+        Resize and formats pictures into appropriate tensors for the VGG19 model.
+
+        :param image: the image to preprocess.
+        :return: the image preprocessed.
+        """
+        # Convert image to array.
         image = img_to_array(image)
+        # Add extra dimension for the batches.
         image = np.expand_dims(image, axis=0)
         # image = tf.expand_dims(image, axis=0)
-        image = preprocess_input(image)
-        return image
 
-    # util function to convert a tensor into a valid image
+        # Preprocess the image and return it.
+        return preprocess_input(image)
 
     def deprocess_image(self, x) -> np.ndarray:
-        if K.image_data_format() == 'channels_first':
-            x = x.reshape((3, self.img_nrows, self.img_ncols))
-            x = x.transpose((1, 2, 0))
-        else:
-            x = x.reshape((self.img_nrows, self.img_ncols, 3))
+        """
+        Converts a tensor of VGG19 into a valid image.
+
+        :param x: the tensor.
+        :return: the image resulting from the tensor.
+        """
+        # Remove extra dimension for the batches.
+        x = x.reshape((self.img_nrows, self.img_ncols, 3))
+
         # Remove zero-center by mean pixel
         x[:, :, 0] += 103.939
         x[:, :, 1] += 116.779
         x[:, :, 2] += 123.68
+
         # 'BGR'->'RGB'
         x = x[:, :, ::-1]
         x = np.clip(x, 0, 255).astype('uint8')
+
         return x
