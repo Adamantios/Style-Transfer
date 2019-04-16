@@ -43,5 +43,5 @@ class LBFGSOptimizer(object):
     def run(self, x0, n_iter: int):
         # run scipy-based optimization (L-BFGS) over the pixels of the generated image
         # so as to minimize the neural style loss
-        x, f, _ = fmin_l_bfgs_b(self._loss, x0, self._grads, maxfun=n_iter)
+        x, f, _ = fmin_l_bfgs_b(self._loss, x0, self._grads, maxiter=n_iter)
         return x, f
