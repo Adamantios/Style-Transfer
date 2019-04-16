@@ -23,6 +23,8 @@ def create_parser() -> ArgumentParser:
                         help='Whether a gif of the procedure should be created.')
     parser.add_argument('-f', '--frames', type=int, default=10, required=False,
                         help='Number of the gif frames.\nIgnored if --gif is not passed.')
+    parser.add_argument('-d', '--duration', type=int, default=1200, required=False,
+                        help='Duration of the gif in milliseconds.\nIgnored if --gif is not passed.')
     parser.add_argument('-cw', '--content_weight', type=float, default=1.2, required=False,
                         help='Content weight.')
     parser.add_argument('-sw', '--style_weight', type=float, default=1.0, required=False,
