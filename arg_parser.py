@@ -7,7 +7,9 @@ def create_parser() -> ArgumentParser:
 
     :return: ArgumentParser object.
     """
-    parser = ArgumentParser(description='Style transfer using VGG19 feature layers and L-BFGS optimizer.')
+    parser = ArgumentParser(description='Style transfer using VGG19 feature layers and L-BFGS optimizer.',
+                            epilog='Note: '
+                                   'The result image is going to have the same dimensions with the content image.')
     parser.add_argument('content_image_path', metavar='content', type=str,
                         help='Path to the content image.')
     parser.add_argument('style_image_path', metavar='style', type=str,
