@@ -20,9 +20,9 @@ def style_transfer():
     img_filename = combined_filename + '.png'
 
     if gif:
-        # Create frames array.
-        frames = []
-        # Initialize gif's filename.
+        # Initialize a frames list, containing the content image.
+        frames = [content_image]
+        # Create gif's filename.
         gif_filename = combined_filename + '.gif'
         for frame in range(n_frames):
             print('Creating frame {}'.format(frame + 1))
