@@ -42,7 +42,7 @@ def style_transfer():
         try:
             # Save frames into a GIF file that loops forever.
             frames[0].save(gif_filename, format='GIF', append_images=frames[1:], save_all=True,
-                           duration=int(gif_duration / len(frames)), loop=0)
+                           duration=int(gif_duration / len(frames)), loop=loop)
             print("A GIF of the style transfer steps has been saved as '{}'".format(gif_filename))
         except ValueError or IOError:
             print('Something went wrong while trying to save the gif.')
@@ -74,10 +74,11 @@ if __name__ == '__main__':
     content_image_path = args.content_image_path
     style_image_path = args.style_image_path
     combined_filename = args.combined_filename
+    n_iter = args.iter
     gif = args.gif
     n_frames = args.frames
     gif_duration = args.duration
-    n_iter = args.iter
+    loop = args.loop
     content_weight = args.content_weight
     style_weight = args.style_weight
     tv_weight = args.tv_weight
