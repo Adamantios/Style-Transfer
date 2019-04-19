@@ -84,7 +84,6 @@ if __name__ == '__main__':
     tv_weight = args.tv_weight
 
     # Load images.
-    # TODO check for invalid path.
     content_image = load_img(content_image_path)
     style_image = load_img(style_image_path)
 
