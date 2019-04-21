@@ -2,7 +2,7 @@ from tensorflow import SparseTensor
 import tensorflow.contrib.keras.api.keras.backend as K
 
 
-class InvalidDimensionsException(Exception):
+class InvalidDimensionsError(Exception):
     pass
 
 
@@ -12,9 +12,9 @@ class LossCalculator(object):
                  content_weight: float, style_weight: float, total_variation_weight: float):
         # Check the combined image's dimensions.
         if K.ndim(combination_image) != 4:
-            raise InvalidDimensionsException('Combination image tensor should be 4 dimensional.\n'
-                                             'Got {} instead.'
-                                             .format(combination_image.shape))
+            raise InvalidDimensionsError('Combination image tensor should be 4 dimensional.\n'
+                                         'Got {} instead.'
+                                         .format(combination_image.shape))
 
         self._combination_image = combination_image
         self._img_nrows = img_nrows
@@ -34,9 +34,9 @@ class LossCalculator(object):
         :return: the Gram matrix.
         """
         if K.ndim(x) != 3:
-            raise InvalidDimensionsException('Input tensor should be 3 dimensional.\n'
-                                             'Got {} instead.'
-                                             .format(x.shape))
+            raise InvalidDimensionsError('Input tensor should be 3 dimensional.\n'
+                                         'Got {} instead.'
+                                         .format(x.shape))
 
         features = K.batch_flatten(K.permute_dimensions(x, (2, 0, 1)))
         gram = K.dot(features, K.transpose(features))
@@ -53,13 +53,13 @@ class LossCalculator(object):
         :return: the style loss.
         """
         if K.ndim(style) != 3:
-            raise InvalidDimensionsException('Input tensor should be 3 dimensional.\n'
-                                             'Got {} instead.'
-                                             .format(style.shape))
+            raise InvalidDimensionsError('Input tensor should be 3 dimensional.\n'
+                                         'Got {} instead.'
+                                         .format(style.shape))
         if K.ndim(combined) != 3:
-            raise InvalidDimensionsException('Input tensor should be 3 dimensional.\n'
-                                             'Got {} instead.'
-                                             .format(combined.shape))
+            raise InvalidDimensionsError('Input tensor should be 3 dimensional.\n'
+                                         'Got {} instead.'
+                                         .format(combined.shape))
 
         s = self._gram_matrix(style)
         g = self._gram_matrix(combined)
