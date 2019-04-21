@@ -9,6 +9,9 @@ LOOP = 0
 CONTENT_WEIGHT = 1.2
 STYLE_WEIGHT = 1
 TV_WEIGHT = 1
+WEIGHTS_PATH = ''
+NETWORK = 'vgg'
+NETWORK_CHOICES = 'vgg', 'custom'
 
 
 def create_parser() -> ArgumentParser:
@@ -45,5 +48,13 @@ def create_parser() -> ArgumentParser:
                         help='Style weight (default %(default)s).')
     parser.add_argument('-tvw', '--tv_weight', type=float, default=TV_WEIGHT, required=False,
                         help='Total Variation weight (default %(default)s).')
+    parser.add_argument('-n', '--network', type=str, default=NETWORK, required=False, choices=NETWORK_CHOICES,
+                        help='The network to be used. (default %(default)s).')
+    parser.add_argument('-p', '--path', type=str, default=WEIGHTS_PATH, required=False,
+                        help='The network\'s weights path. (default %(default)s).\n'
+                             'Use this parameter, if you have the network\'s weights saved locally, '
+                             'so that you do not have to wait for the model to download.\n'
+                             'It should be the wights of the network that was specified with the '
+                             '\'--network\' parameter.')
 
     return parser

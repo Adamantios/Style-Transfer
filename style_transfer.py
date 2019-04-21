@@ -1,9 +1,10 @@
+import os
 import time
 
 from keras_preprocessing.image import load_img, save_img
 
 from core.l_bfgs_optimizer import LBFGSOptimizer
-from core.network import StyleTransferVGG19
+from core.vgg_network import StyleTransferVGG19
 from arg_parser import create_parser
 from core.loss_calculator import LossCalculator
 from PIL import Image
@@ -82,13 +83,24 @@ if __name__ == '__main__':
     content_weight = args.content_weight
     style_weight = args.style_weight
     tv_weight = args.tv_weight
+    network = args.network
+    path = args.path
+
+    if not os.path.isfile(path):
+        raise FileNotFoundError('Network {} does not exist.'.format(path))
 
     # Load images.
     content_image = load_img(content_image_path)
     style_image = load_img(style_image_path)
 
     # Initialize model.
-    model = StyleTransferVGG19(content_image, style_image)
+    if network == 'vgg':
+        model = StyleTransferVGG19(content_image, style_image, path)
+    elif network == 'custom':
+        model = StyleTransferVGG19(content_image, style_image, path)
+        # TODO model = StyleTransferCustom(content_image, style_image, path)
+    else:
+        raise ValueError('Invalid parameter has been encountered for the \'--network\' argument.')
 
     # Initialize loss calculator.
     loss_calculator = LossCalculator(model.combination_image, content_image.height, content_image.width,
@@ -99,5 +111,3 @@ if __name__ == '__main__':
 
     # Begin style transferring procedure.
     style_transfer()
-
-# TODO save model and load it if it exists. Otherwise, download it.
