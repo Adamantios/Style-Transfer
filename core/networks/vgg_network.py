@@ -42,7 +42,7 @@ class StyleTransferVGG19(_StyleTransferNetwork):
             model = VGG19(input_tensor=input_tensor, weights='imagenet', include_top=False)
         else:
             # Create the network, using the weights of the path's file.
-            model = self._network(input_tensor, path)
+            model = self.network(input_tensor, path)
 
         # Get the symbolic outputs of each "key" layer.
         self._outputs_dict = dict([(layer.name, layer.output) for layer in model.layers])
@@ -53,7 +53,7 @@ class StyleTransferVGG19(_StyleTransferNetwork):
                                                                                         'block5_conv1']]
 
     @staticmethod
-    def _network(input_tensor, weights_path):
+    def network(input_tensor, weights_path: Union[None, str] = None) -> Sequential:
         """
         Defines a vgg19 network.
 
