@@ -17,6 +17,7 @@ class StyleTransferCustom(_StyleTransferNetwork):
 
     def __init__(self, content_image: Image, style_image: Image, path: str):
         super().__init__()
+
         # Get the content image's width and height.
         width, height = content_image.size
 

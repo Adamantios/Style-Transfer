@@ -8,10 +8,14 @@ from tensorflow.contrib.keras.api.keras.preprocessing.image import img_to_array
 from tensorflow.python.keras import Sequential
 from tensorflow.python.keras.layers import Conv2D, MaxPooling2D, InputLayer
 
+from core.networks.abstract_network import _StyleTransferNetwork
 
-class StyleTransferVGG19(object):
+
+class StyleTransferVGG19(_StyleTransferNetwork):
 
     def __init__(self, content_image: Image, style_image: Image, path: str = ''):
+        super().__init__()
+
         # Get the content image's width and height.
         width, height = content_image.size
 
