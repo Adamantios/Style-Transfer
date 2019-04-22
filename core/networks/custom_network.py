@@ -130,9 +130,9 @@ class StyleTransferCustom(_StyleTransferNetwork):
         image[:, :, 0] -= 125.30691805
         image[:, :, 1] -= 122.95039414
         image[:, :, 2] -= 113.86538318
-        image[:, :, 0] = image / 62.99321928
-        image[:, :, 1] = image / 62.08870764
-        image[:, :, 2] = image / 66.70489964
+        image[:, :, 0] = image[:, :, 0] / 62.99321928
+        image[:, :, 1] = image[:, :, 1] / 62.08870764
+        image[:, :, 2] = image[:, :, 2] / 66.70489964
 
         # Return the image.
         return image
