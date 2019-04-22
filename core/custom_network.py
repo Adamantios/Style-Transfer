@@ -46,7 +46,7 @@ class StyleTransferCustom(object):
                                                                                         'block3_conv1']]
 
     @staticmethod
-    def network(input_tensor, weights_path: Union[None, str] = ''):
+    def network(input_tensor, weights_path: Union[None, str] = None):
         # Create a Sequential model.
         model = Sequential(name='custom_cifar-10')
         # Create an InputLayer using the input tensor.
