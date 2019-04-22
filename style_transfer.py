@@ -34,11 +34,13 @@ def initialize_model() -> Union[StyleTransferVGG19, StyleTransferCustom]:
         if path != '' and not os.path.isfile(path):
             raise FileNotFoundError('VGG network weights file {} does not exist.'.format(path))
         style_transfer_model = StyleTransferVGG19(content_image, style_image, path)
+
     elif network == 'custom':
         # Check if weights path exists.
         if not os.path.isfile(path):
             raise NetworkNotTrainedError('Custom network is not trained!\nWeights file {} does not exist.'.format(path))
         style_transfer_model = StyleTransferCustom(content_image, style_image, path)
+
     else:
         raise ValueError('Invalid parameter has been encountered for the \'--network\' argument.')
 
