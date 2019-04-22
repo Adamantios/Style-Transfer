@@ -87,7 +87,7 @@ if __name__ == '__main__':
     path = args.path
 
     if not os.path.isfile(path):
-        raise FileNotFoundError('Network {} does not exist.'.format(path))
+        raise FileNotFoundError('Network weights file {} does not exist.'.format(path))
 
     # Load images.
     content_image = load_img(content_image_path)
