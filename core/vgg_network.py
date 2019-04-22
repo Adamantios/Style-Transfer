@@ -1,3 +1,5 @@
+import os
+
 import numpy as np
 from PIL.Image import Image
 from tensorflow.contrib.keras.api.keras import backend as K
@@ -130,6 +132,10 @@ class StyleTransferVGG19(object):
                          padding='same',
                          name='block5_conv4'))
         model.add(MaxPooling2D((2, 2), strides=(2, 2), name='block5_pool'))
+
+        # Check if weights file exists.
+        if not os.path.isfile(weights_path):
+            raise FileNotFoundError('Network weights file {} does not exist.'.format(weights_path))
 
         # Load weights.
         model.load_weights(weights_path)
