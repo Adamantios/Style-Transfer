@@ -156,12 +156,13 @@ class StyleTransferVGG19(_StyleTransferNetwork):
         return model
 
     @staticmethod
-    def preprocess_image(image):
+    def preprocess_image(image) -> np.ndarray:
         """
         Resize and formats pictures into appropriate tensors for the VGG19 model.
 
         :param image: the image to preprocess.
-        :return: the image preprocessed.
+
+        :return: the image as a numpy array, preprocessed.
         """
         # Convert image to array.
         image = img_to_array(image)
