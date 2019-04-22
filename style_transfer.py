@@ -70,6 +70,10 @@ def style_transfer():
         print("Image saved as '{}'".format(img_filename))
 
 
+class NetworkNotTrainedError(Exception):
+    pass
+
+
 if __name__ == '__main__':
     # Get arguments.
     args = create_style_transfer_parser().parse_args()
@@ -87,17 +91,20 @@ if __name__ == '__main__':
     network = args.network
     path = args.path
 
-    if not os.path.isfile(path):
-        raise FileNotFoundError('Network weights file {} does not exist.'.format(path))
-
     # Load images.
     content_image = load_img(content_image_path)
     style_image = load_img(style_image_path)
 
     # Initialize model.
     if network == 'vgg':
+        # Check if weights path exists.
+        if path != '' and not os.path.isfile(path):
+            raise FileNotFoundError('VGG network weights file {} does not exist.'.format(path))
         model = StyleTransferVGG19(content_image, style_image, path)
     elif network == 'custom':
+        # Check if weights path exists.
+        if not os.path.isfile(path):
+            raise NetworkNotTrainedError('Custom network is not trained!\nWeights file {} does not exist.'.format(path))
         model = StyleTransferCustom(content_image, style_image, path)
     else:
         raise ValueError('Invalid parameter has been encountered for the \'--network\' argument.')
