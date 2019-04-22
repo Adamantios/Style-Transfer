@@ -10,10 +10,13 @@ from tensorflow.python.keras.layers import Conv2D, MaxPooling2D, InputLayer, Bat
     Dense, Flatten
 from tensorflow.python.keras.regularizers import l2
 
+from core.networks.abstract_network import _StyleTransferNetwork
 
-class StyleTransferCustom(object):
+
+class StyleTransferCustom(_StyleTransferNetwork):
 
     def __init__(self, content_image: Image, style_image: Image, path: str):
+        super().__init__()
         # Get the content image's width and height.
         width, height = content_image.size
 
@@ -47,6 +50,12 @@ class StyleTransferCustom(object):
 
     @staticmethod
     def network(input_tensor, weights_path: Union[None, str] = None):
+        """
+        Defines a custom cifar-10 network.
+
+        :param input_tensor: the input tensor of the network.
+        :param weights_path: a path to a trained cifar-10 network's weights.
+        """
         # Create a Sequential model.
         model = Sequential(name='custom_cifar-10')
         # Create an InputLayer using the input tensor.

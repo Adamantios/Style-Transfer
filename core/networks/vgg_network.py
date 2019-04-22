@@ -49,6 +49,12 @@ class StyleTransferVGG19(object):
 
     @staticmethod
     def _network(input_tensor, weights_path):
+        """
+        Defines a vgg19 network.
+
+        :param input_tensor: the input tensor of the network.
+        :param weights_path: a path to a trained vgg19 network's weights.
+        """
         # Create a Sequential model
         model = Sequential(name='vgg19')
         # Create an InputLayer using the input tensor.
