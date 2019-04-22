@@ -16,6 +16,18 @@ class NetworkNotTrainedError(Exception):
     pass
 
 
+def print_welcome():
+    print('----------------------------------------------------------------\n'
+          'Welcome!\n'
+          'Lets Transfer some Style.\n\n')
+
+
+def print_goodbye():
+    print('That was it!\n'
+          'Thank you for Transferring your Style with this script!\n'
+          '----------------------------------------------------------------\n')
+
+
 def initialize_model() -> Union[StyleTransferVGG19, StyleTransferCustom]:
     if network == 'vgg':
         # Check if weights path exists.
@@ -93,6 +105,8 @@ def style_transfer():
 
 
 if __name__ == '__main__':
+    print_welcome()
+
     # Get arguments.
     args = create_style_transfer_parser().parse_args()
     content_image_path = args.content_image_path
@@ -125,3 +139,5 @@ if __name__ == '__main__':
 
     # Begin style transferring procedure.
     style_transfer()
+
+    print_goodbye()
