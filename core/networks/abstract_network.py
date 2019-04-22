@@ -32,12 +32,14 @@ class _StyleTransferNetwork(ABC):
         """
         pass
 
-    @abstractmethod
-    def deprocess_image(self, x) -> np.ndarray:
+    @staticmethod
+    def deprocess_image(x, shape) -> np.ndarray:
         """
         Converts a tensor of Style Transfer Network into a valid image.
 
         :param x: the tensor.
+        :param shape: The shape of the resulting image.
+
         :return: the image resulting from the tensor.
         """
         pass

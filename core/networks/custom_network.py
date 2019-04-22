@@ -135,15 +135,18 @@ class StyleTransferCustom(_StyleTransferNetwork):
         # Return the image.
         return image
 
-    def deprocess_image(self, x) -> np.ndarray:
+    @staticmethod
+    def deprocess_image(x, shape) -> np.ndarray:
         """
         Converts a tensor of custom-cifar10 into a valid image.
 
         :param x: the tensor.
+        :param shape: The shape of the resulting image.
+
         :return: the image resulting from the tensor.
         """
         # Remove extra dimension for the batches.
-        x = x.reshape((self.img_nrows, self.img_ncols, 3))
+        x = x.reshape(shape)
 
         # Remove zero-center.
         x[:, :, 0] += 125.30691805

@@ -34,7 +34,7 @@ def style_transfer():
             x, f = optimizer.run(x, n_iter)
             print('Current loss value:', f)
             # Deprocess result, in order to get a valid image. Pass a copy of x, because it is mutable!
-            img = model.deprocess_image(x.copy())
+            img = model.deprocess_image(x.copy(), (model.img_nrows, model.img_ncols, 3))
             # Save current frame.
             frames.append(Image.fromarray(img))
             # Stop timer.
@@ -64,7 +64,7 @@ def style_transfer():
         end_time = time.time()
         print('Optimisation finished in {} seconds'.format(end_time - start_time))
         # Deprocess result, in order to get a valid image.
-        img = model.deprocess_image(x)
+        img = model.deprocess_image(x, (model.img_nrows, model.img_ncols, 3))
         # Save the image.
         save_img(img_filename, img)
         print("Image saved as '{}'".format(img_filename))

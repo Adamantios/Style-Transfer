@@ -173,15 +173,18 @@ class StyleTransferVGG19(_StyleTransferNetwork):
         # Preprocess the image and return it.
         return preprocess_input(image)
 
-    def deprocess_image(self, x) -> np.ndarray:
+    @staticmethod
+    def deprocess_image(x, shape) -> np.ndarray:
         """
         Converts a tensor of VGG19 into a valid image.
 
         :param x: the tensor.
+        :param shape: The shape of the resulting image.
+
         :return: the image resulting from the tensor.
         """
         # Remove extra dimension for the batches.
-        x = x.reshape((self.img_nrows, self.img_ncols, 3))
+        x = x.reshape(shape)
 
         # Remove zero-center by mean pixel
         x[:, :, 0] += 103.939
