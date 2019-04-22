@@ -89,8 +89,10 @@ class StyleTransferCustom(object):
             model.add(Flatten())
             model.add(Dense(10, activation='softmax'))
         else:
+            # Check if weights file exists.
             if not os.path.isfile(weights_path):
                 raise FileNotFoundError('Network weights file {} does not exist.'.format(weights_path))
+
             # Load weights.
             model.load_weights(weights_path)
 
