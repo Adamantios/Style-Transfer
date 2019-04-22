@@ -5,7 +5,7 @@ from keras_preprocessing.image import load_img, save_img
 
 from core.l_bfgs_optimizer import LBFGSOptimizer
 from core.vgg_network import StyleTransferVGG19
-from arg_parser import create_parser
+from arg_parsers import create_style_transfer_parser
 from core.loss_calculator import LossCalculator
 from PIL import Image
 
@@ -71,7 +71,7 @@ def style_transfer():
 
 if __name__ == '__main__':
     # Get arguments.
-    args = create_parser().parse_args()
+    args = create_style_transfer_parser().parse_args()
     content_image_path = args.content_image_path
     style_image_path = args.style_image_path
     combined_filename = args.combined_filename
