@@ -50,12 +50,14 @@ class StyleTransferCustom(_StyleTransferNetwork):
                                                                                         'block3_conv1']]
 
     @staticmethod
-    def network(input_tensor, weights_path: Union[None, str] = None):
+    def network(input_tensor, weights_path: Union[None, str] = None) -> Sequential:
         """
         Defines a custom cifar-10 network.
 
         :param input_tensor: the input tensor of the network.
         :param weights_path: a path to a trained cifar-10 network's weights.
+
+        :return: Keras Sequential Model.
         """
         # Create a Sequential model.
         model = Sequential(name='custom_cifar-10')

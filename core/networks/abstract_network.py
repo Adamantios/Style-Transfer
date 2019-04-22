@@ -2,6 +2,7 @@ from abc import abstractmethod, ABC
 from typing import Union
 
 import numpy as np
+from tensorflow.python.keras import Sequential
 
 
 class _StyleTransferNetwork(ABC):
@@ -9,12 +10,14 @@ class _StyleTransferNetwork(ABC):
         pass
 
     @staticmethod
-    def network(input_tensor, weights_path: Union[None, str] = None):
+    def network(input_tensor, weights_path: Union[None, str] = None) -> Sequential:
         """
         Defines a Style Transfer Network.
 
         :param input_tensor: the input tensor of the network.
         :param weights_path: a path to a trained cifar-10 network's weights.
+
+        :return: Keras Sequential Model.
         """
         pass
 

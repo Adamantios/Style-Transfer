@@ -1,4 +1,5 @@
 import os
+from typing import Union
 
 import numpy as np
 from PIL.Image import Image
@@ -58,6 +59,8 @@ class StyleTransferVGG19(_StyleTransferNetwork):
 
         :param input_tensor: the input tensor of the network.
         :param weights_path: a path to a trained vgg19 network's weights.
+
+        :return: Keras Sequential Model.
         """
         # Create a Sequential model
         model = Sequential(name='vgg19')
