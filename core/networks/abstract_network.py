@@ -22,11 +22,13 @@ class _StyleTransferNetwork(ABC):
         pass
 
     @staticmethod
-    def preprocess_image(image) -> dict:
+    def preprocess_image(image) -> np.ndarray:
         """
-        Getter for the model's parameters and its values.
+        Resize and formats pictures into appropriate tensors for the style transfer network.
 
-        :return: a dictionary containing the model's parameters and its values.
+        :param image: the image to preprocess.
+
+        :return: the image as a numpy array, preprocessed.
         """
         pass
 
