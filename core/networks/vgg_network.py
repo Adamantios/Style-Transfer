@@ -195,6 +195,8 @@ class StyleTransferVGG19(_StyleTransferNetwork):
 
         # 'BGR'->'RGB'
         x = x[:, :, ::-1]
+
+        # Clip to [0, 255] and return as uint8 type.
         x = np.clip(x, 0, 255).astype('uint8')
 
         return x
