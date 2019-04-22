@@ -3,6 +3,7 @@ import time
 
 from keras_preprocessing.image import load_img, save_img
 
+from core.custom_network import StyleTransferCustom
 from core.l_bfgs_optimizer import LBFGSOptimizer
 from core.vgg_network import StyleTransferVGG19
 from arg_parsers import create_style_transfer_parser
@@ -97,8 +98,7 @@ if __name__ == '__main__':
     if network == 'vgg':
         model = StyleTransferVGG19(content_image, style_image, path)
     elif network == 'custom':
-        model = StyleTransferVGG19(content_image, style_image, path)
-        # TODO model = StyleTransferCustom(content_image, style_image, path)
+        model = StyleTransferCustom(content_image, style_image, path)
     else:
         raise ValueError('Invalid parameter has been encountered for the \'--network\' argument.')
 
