@@ -158,4 +158,7 @@ class StyleTransferCustom(_StyleTransferNetwork):
         x[:, :, 1] *= 62.08870764
         x[:, :, 2] *= 66.70489964
 
+        # Clip to [0, 255] and return as uint8 type.
+        x = np.clip(x, 0, 255).astype('uint8')
+
         return x
