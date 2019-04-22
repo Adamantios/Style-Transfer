@@ -1,5 +1,6 @@
 import os
 import time
+from typing import Union
 
 from keras_preprocessing.image import load_img, save_img
 
@@ -9,6 +10,27 @@ from core.networks.vgg_network import StyleTransferVGG19
 from arg_parsers import create_style_transfer_parser
 from core.loss_calculator import LossCalculator
 from PIL import Image
+
+
+class NetworkNotTrainedError(Exception):
+    pass
+
+
+def initialize_model() -> Union[StyleTransferVGG19, StyleTransferCustom]:
+    if network == 'vgg':
+        # Check if weights path exists.
+        if path != '' and not os.path.isfile(path):
+            raise FileNotFoundError('VGG network weights file {} does not exist.'.format(path))
+        style_transfer_model = StyleTransferVGG19(content_image, style_image, path)
+    elif network == 'custom':
+        # Check if weights path exists.
+        if not os.path.isfile(path):
+            raise NetworkNotTrainedError('Custom network is not trained!\nWeights file {} does not exist.'.format(path))
+        style_transfer_model = StyleTransferCustom(content_image, style_image, path)
+    else:
+        raise ValueError('Invalid parameter has been encountered for the \'--network\' argument.')
+
+    return style_transfer_model
 
 
 def style_transfer():
@@ -70,10 +92,6 @@ def style_transfer():
         print("Image saved as '{}'".format(img_filename))
 
 
-class NetworkNotTrainedError(Exception):
-    pass
-
-
 if __name__ == '__main__':
     # Get arguments.
     args = create_style_transfer_parser().parse_args()
@@ -96,18 +114,7 @@ if __name__ == '__main__':
     style_image = load_img(style_image_path)
 
     # Initialize model.
-    if network == 'vgg':
-        # Check if weights path exists.
-        if path != '' and not os.path.isfile(path):
-            raise FileNotFoundError('VGG network weights file {} does not exist.'.format(path))
-        model = StyleTransferVGG19(content_image, style_image, path)
-    elif network == 'custom':
-        # Check if weights path exists.
-        if not os.path.isfile(path):
-            raise NetworkNotTrainedError('Custom network is not trained!\nWeights file {} does not exist.'.format(path))
-        model = StyleTransferCustom(content_image, style_image, path)
-    else:
-        raise ValueError('Invalid parameter has been encountered for the \'--network\' argument.')
+    model = initialize_model()
 
     # Initialize loss calculator.
     loss_calculator = LossCalculator(model.combination_image, content_image.height, content_image.width,
