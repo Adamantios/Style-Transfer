@@ -3,9 +3,9 @@ import time
 
 from keras_preprocessing.image import load_img, save_img
 
-from core.custom_network import StyleTransferCustom
+from core.networks.custom_network import StyleTransferCustom
 from core.l_bfgs_optimizer import LBFGSOptimizer
-from core.vgg_network import StyleTransferVGG19
+from core.networks.vgg_network import StyleTransferVGG19
 from arg_parsers import create_style_transfer_parser
 from core.loss_calculator import LossCalculator
 from PIL import Image
