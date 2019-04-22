@@ -164,8 +164,10 @@ class StyleTransferVGG19(_StyleTransferNetwork):
 
         :return: the image as a numpy array, preprocessed.
         """
-        # Convert image to array.
-        image = img_to_array(image)
+        if not isinstance(image, np.ndarray):
+            # Convert image to array.
+            image = img_to_array(image)
+
         # Add extra dimension for the batches.
         image = np.expand_dims(image, axis=0)
         # image = tf.expand_dims(image, axis=0)
