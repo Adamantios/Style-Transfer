@@ -16,16 +16,20 @@ class NetworkNotTrainedError(Exception):
     pass
 
 
+def print_separator() -> None:
+    print('\n-------------------------------------------------------------------------------------------------------\n')
+
+
 def print_welcome():
-    print('----------------------------------------------------------------\n'
-          'Welcome!\n'
+    print('Welcome!\n'
           'Lets Transfer some Style.\n\n')
+    print_separator()
 
 
 def print_goodbye():
+    print_separator()
     print('That was it!\n'
-          'Thank you for Transferring your Style with this script!\n'
-          '----------------------------------------------------------------\n')
+          'Thank you for Transferring your Style with this script!\n')
 
 
 def initialize_model() -> Union[StyleTransferVGG19, StyleTransferCustom]:
