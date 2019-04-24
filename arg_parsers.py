@@ -108,6 +108,8 @@ def create_training_parser() -> ArgumentParser:
                              'Ignored if --omit_history has been chosen')
     parser.add_argument('-o', '--optimizer', type=str, default=OPTIMIZER, required=False, choices=OPTIMIZER_CHOICES,
                         help='The optimizer to be used. (default %(default)s).')
+    parser.add_argument('-lr', '--learning_rate', type=int, default=LEARNING_RATE, required=False,
+                        help='The learning rate for the optimizer (default %(default)s).\n')
     parser.add_argument('-cn', '--clip_norm', type=int, default=CLIP_NORM, required=False,
                         help='The clip norm for the optimizer (default %(default)s).\n')
     parser.add_argument('-cv', '--clip_value', type=int, default=CLIP_VALUE, required=False,
