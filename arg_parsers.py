@@ -32,7 +32,8 @@ MOMENTUM = .0
 DECAY = 1E-6
 LOSS = 'categorical_crossentropy'
 LOSS_CHOICES = 'categorical_crossentropy', 'mean_squared_error'
-BATCH_SIZE = 64
+TRAIN_BATCH_SIZE = 64
+EVAL_BATCH_SIZE = 128
 EPOCHS = 125
 VERBOSITY = 1
 
@@ -125,8 +126,10 @@ def create_training_parser() -> ArgumentParser:
                         help='The decay for the optimizer (default %(default)s).\n')
     parser.add_argument('-l', '--loss', type=str, default=LOSS, required=False, choices=LOSS_CHOICES,
                         help='The loss to be used during the optimization. (default %(default)s).')
-    parser.add_argument('-bs', '--batch_size', type=int, default=BATCH_SIZE, required=False,
+    parser.add_argument('-bs', '--batch_size', type=int, default=TRAIN_BATCH_SIZE, required=False,
                         help='The batch size for the optimization (default %(default)s).\n')
+    parser.add_argument('-ebs', '--evaluation_batch_size', type=int, default=EVAL_BATCH_SIZE, required=False,
+                        help='The batch size for the evaluation (default %(default)s).\n')
     parser.add_argument('-e', '--epochs', type=int, default=EPOCHS, required=False,
                         help='The number of epochs to train the network (default %(default)s).\n')
     parser.add_argument('-v', '--verbosity', type=int, default=VERBOSITY, required=False,
