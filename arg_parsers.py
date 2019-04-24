@@ -120,7 +120,7 @@ def create_training_parser() -> ArgumentParser:
                         help='The beta 2 for the optimizer (default %(default)s).\n')
     parser.add_argument('-rho', type=int, default=RHO, required=False,
                         help='The rho for the optimizer (default %(default)s).\n')
-    parser.add_argument('-m', '--momentum', type=int, default=LEARNING_RATE, required=False,
+    parser.add_argument('-m', '--momentum', type=int, default=MOMENTUM, required=False,
                         help='The momentum for the optimizer (default %(default)s).\n')
     parser.add_argument('-d', '--decay', type=int, default=DECAY, required=False,
                         help='The decay for the optimizer (default %(default)s).\n')
