@@ -39,7 +39,7 @@ class StyleTransferCustom(_StyleTransferNetwork):
                                       self.combination_image], axis=0)
 
         # Create the network, using the weights of the path's file.
-        model = self.network(input_tensor, path)
+        model = self.network(input_tensor=input_tensor, weights_path=path)
 
         # Get the symbolic outputs of each "key" layer.
         self._outputs_dict = dict([(layer.name, layer.output) for layer in model.layers])
@@ -50,25 +50,39 @@ class StyleTransferCustom(_StyleTransferNetwork):
                                                                                         'block3_conv1']]
 
     @staticmethod
-    def network(input_tensor, weights_path: Union[None, str] = None) -> Sequential:
+    def network(input_shape=None, input_tensor=None, weights_path: Union[None, str] = None) -> Sequential:
         """
         Defines a custom cifar-10 network.
 
-        :param input_tensor: the input tensor of the network.
+        :param input_shape: the input tensor of the network. Can be omitted if input_tensor is used.
+        :param input_tensor: the input tensor of the network. Can be omitted if input_shape is used.
         :param weights_path: a path to a trained cifar-10 network's weights.
 
         :return: Keras Sequential Model.
         """
+        if input_shape is None and input_tensor is None:
+            raise ValueError('You need to specify input shape or input tensor for the network.')
+
         # Create a Sequential model.
         model = Sequential(name='custom_cifar-10')
-        # Create an InputLayer using the input tensor.
-        model.add(InputLayer(input_tensor=input_tensor))
+
+        if input_shape is None:
+            # Create an InputLayer using the input tensor.
+            model.add(InputLayer(input_tensor=input_tensor))
+
         # Define a weight decay for the regularisation.
         weight_decay = 1e-4
 
         # Block1
-        model.add(Conv2D(32, (3, 3), padding='same', activation='elu', name='block1_conv1',
-                         kernel_regularizer=l2(weight_decay)))
+        if input_tensor is None:
+            first_conv = Conv2D(32, (3, 3), padding='same', activation='elu', name='block1_conv1',
+                                kernel_regularizer=l2(weight_decay), input_shape=input_shape)
+
+        else:
+            first_conv = Conv2D(32, (3, 3), padding='same', activation='elu', name='block1_conv1',
+                                kernel_regularizer=l2(weight_decay))
+
+        model.add(first_conv)
         model.add(BatchNormalization(name='block1_batch-norm1'))
         model.add(Conv2D(32, (3, 3), padding='same', activation='elu', name='block1_conv2',
                          kernel_regularizer=l2(weight_decay)))
