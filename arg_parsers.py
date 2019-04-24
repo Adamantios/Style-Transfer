@@ -30,6 +30,8 @@ BETA2 = .999
 RHO = .9
 MOMENTUM = .0
 DECAY = 1E-6
+LOSS = 'categorical_crossentropy'
+LOSS_CHOICES = 'categorical_crossentropy', 'mean_squared_error'
 BATCH_SIZE = 64
 EPOCHS = 125
 VERBOSITY = 1
@@ -121,6 +123,8 @@ def create_training_parser() -> ArgumentParser:
                         help='The momentum for the optimizer (default %(default)s).\n')
     parser.add_argument('-d', '--decay', type=int, default=DECAY, required=False,
                         help='The decay for the optimizer (default %(default)s).\n')
+    parser.add_argument('-l', '--loss', type=str, default=LOSS, required=False, choices=LOSS_CHOICES,
+                        help='The loss to be used during the optimization. (default %(default)s).')
     parser.add_argument('-bs', '--batch_size', type=int, default=BATCH_SIZE, required=False,
                         help='The batch size for the optimization (default %(default)s).\n')
     parser.add_argument('-e', '--epochs', type=int, default=EPOCHS, required=False,
