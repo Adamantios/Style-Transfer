@@ -144,9 +144,6 @@ class StyleTransferCustom(_StyleTransferNetwork):
         image[:, :, 0] -= 125.30691805
         image[:, :, 1] -= 122.95039414
         image[:, :, 2] -= 113.86538318
-        image[:, :, 0] = image[:, :, 0] / 62.99321928
-        image[:, :, 1] = image[:, :, 1] / 62.08870764
-        image[:, :, 2] = image[:, :, 2] / 66.70489964
 
         # Return the image.
         return image
@@ -168,9 +165,6 @@ class StyleTransferCustom(_StyleTransferNetwork):
         x[:, :, 0] += 125.30691805
         x[:, :, 1] += 122.95039414
         x[:, :, 2] += 113.86538318
-        x[:, :, 0] *= 62.99321928
-        x[:, :, 1] *= 62.08870764
-        x[:, :, 2] *= 66.70489964
 
         # Clip to [0, 255] and return as uint8 type.
         x = np.clip(x, 0, 255).astype('uint8')
