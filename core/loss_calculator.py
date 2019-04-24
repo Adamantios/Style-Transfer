@@ -124,7 +124,7 @@ class LossCalculator(object):
         # Calculate and add the total variation loss.
         loss += self._total_variation_weight * self._total_variation_loss()
 
-        # Calculate the gradients of the combined image with respect to the loss.
+        # Calculate the gradients of the loss with respect to the combined image.
         grads = K.gradients(loss, self._combination_image)
 
         # Create outputs, containing the loss and the grads.
