@@ -100,10 +100,10 @@ def create_training_parser() -> ArgumentParser:
                         help='Whether the weights should not be saved (default %(default)s).')
     parser.add_argument('-oh', '--omit_history', default=not SAVE_HIST, required=False, action='store_false',
                         help='Whether the training history should not be saved (default %(default)s).')
-    parser.add_argument('-wf', 'weights_filepath', default=WEIGHTS_FILENAME, required=False, type=str,
+    parser.add_argument('-wf', '--weights_filepath', default=WEIGHTS_FILENAME, required=False, type=str,
                         help='Path to store the trained network\'s weights (default %(default)s). '
                              'Ignored if --omit_weights has been chosen')
-    parser.add_argument('-hf', 'history_filepath', default=HIST_FILENAME, required=False, type=str,
+    parser.add_argument('-hf', '--history_filepath', default=HIST_FILENAME, required=False, type=str,
                         help='Path to store the trained network\'s history (default %(default)s). '
                              'Ignored if --omit_history has been chosen')
     parser.add_argument('-o', '--optimizer', type=str, default=OPTIMIZER, required=False, choices=OPTIMIZER_CHOICES,
