@@ -53,7 +53,7 @@ class StyleTransferVGG19(_StyleTransferNetwork):
                                                                                         'block5_conv1']]
 
     @staticmethod
-    def network(input_tensor, weights_path: Union[None, str] = None) -> Sequential:
+    def network(input_tensor, weights_path: str) -> Sequential:
         """
         Defines a vgg19 network.
 

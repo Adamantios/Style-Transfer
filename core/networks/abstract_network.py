@@ -1,5 +1,4 @@
-from abc import abstractmethod, ABC
-from typing import Union
+from abc import ABC
 
 import numpy as np
 from tensorflow.python.keras import Sequential
@@ -10,7 +9,7 @@ class _StyleTransferNetwork(ABC):
         pass
 
     @staticmethod
-    def network(input_tensor, weights_path: Union[None, str] = None) -> Sequential:
+    def network(input_tensor, weights_path: str) -> Sequential:
         """
         Defines a Style Transfer Network.
 
