@@ -120,7 +120,7 @@ class StyleTransferCustom(_StyleTransferNetwork):
                 raise FileNotFoundError('Network weights file {} does not exist.'.format(weights_path))
 
             # Load weights.
-            model.load_weights(weights_path)
+            model.load_weights(weights_path, True)
 
         return model
 
