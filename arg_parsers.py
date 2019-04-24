@@ -33,7 +33,7 @@ def create_style_transfer_parser() -> ArgumentParser:
                         help='Number of iterations for the optimizer (default %(default)s).\n'
                              'If --gif is passed, this is the number of iterations for each frame.')
     parser.add_argument('-g', '--gif', default=CREATE_GIF, required=False, action='store_true',
-                        help='Whether a gif of the procedure should be created.')
+                        help='Whether a gif of the procedure should be created (default %(default)s).')
     parser.add_argument('-f', '--frames', type=int, default=FRAMES, required=False,
                         help='Number of the gif frames (default %(default)s).\nIgnored if --gif is not passed.')
     parser.add_argument('-d', '--duration', type=int, default=DURATION, required=False,
@@ -55,7 +55,10 @@ def create_style_transfer_parser() -> ArgumentParser:
                              'Use this parameter, if you have the network\'s weights saved locally, '
                              'so that you do not have to wait for the model to download.\n'
                              'It should be the wights of the network that was specified with the '
-                             '\'--network\' parameter.')
+                             '\'--network\' parameter. \n'
+                             'WARNING: If you choose the custom network, the weights have to be passed.'
+                             'If you choose the VGG network, this parameter may be ignored '
+                             'and the weights will be automatically downloaded.')
 
     return parser
 
