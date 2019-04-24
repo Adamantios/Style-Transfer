@@ -106,11 +106,11 @@ class StyleTransferCustom(_StyleTransferNetwork):
         model.add(BatchNormalization(name='block3_batch-norm1'))
         model.add(Conv2D(128, (3, 3), padding='same', activation='elu', name='block3_conv2',
                          kernel_regularizer=l2(weight_decay)))
-        model.add(BatchNormalization(name='block3_batch-norm2'))
-        model.add(MaxPooling2D(pool_size=(2, 2), name='block3_pool'))
 
         if weights_path is None:
-            # Add top layer.
+            # Add top layers.
+            model.add(BatchNormalization(name='block3_batch-norm2'))
+            model.add(MaxPooling2D(pool_size=(2, 2), name='block3_pool'))
             model.add(Dropout(0.4, name='block3_dropout'))
             model.add(Flatten())
             model.add(Dense(10, activation='softmax'))
