@@ -39,7 +39,7 @@ class StyleTransferCustom(_StyleTransferNetwork):
                                       self.combination_image], axis=0)
 
         # Create the network, using the weights of the path's file.
-        model = self.network(input_tensor=input_tensor, weights_path=path)
+        model = self.network(input_tensor=input_tensor, weights_path=path, trainable=False)
 
         # Get the symbolic outputs of each "key" layer.
         self._outputs_dict = dict([(layer.name, layer.output) for layer in model.layers])
@@ -50,13 +50,15 @@ class StyleTransferCustom(_StyleTransferNetwork):
                                                                                         'block3_conv1']]
 
     @staticmethod
-    def network(input_shape=None, input_tensor=None, weights_path: Union[None, str] = None) -> Sequential:
+    def network(input_shape=None, input_tensor=None, weights_path: Union[None, str] = None,
+                trainable: bool = True) -> Sequential:
         """
         Defines a custom cifar-10 network.
 
         :param input_shape: the input tensor of the network. Can be omitted if input_tensor is used.
         :param input_tensor: the input tensor of the network. Can be omitted if input_shape is used.
         :param weights_path: a path to a trained cifar-10 network's weights.
+        :param trainable: whether a trainable model should be returned or the layers needed for the style transfer only.
 
         :return: Keras Sequential Model.
         """
@@ -107,14 +109,15 @@ class StyleTransferCustom(_StyleTransferNetwork):
         model.add(Conv2D(128, (3, 3), padding='same', activation='elu', name='block3_conv2',
                          kernel_regularizer=l2(weight_decay)))
 
-        if weights_path is None:
+        if trainable:
             # Add top layers.
             model.add(BatchNormalization(name='block3_batch-norm2'))
             model.add(MaxPooling2D(pool_size=(2, 2), name='block3_pool'))
             model.add(Dropout(0.4, name='block3_dropout'))
             model.add(Flatten())
             model.add(Dense(10, activation='softmax'))
-        else:
+
+        if weights_path is not None:
             # Check if weights file exists.
             if not os.path.isfile(weights_path):
                 raise FileNotFoundError('Network weights file {} does not exist.'.format(weights_path))
