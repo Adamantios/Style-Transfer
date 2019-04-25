@@ -108,21 +108,21 @@ def create_training_parser() -> ArgumentParser:
                              'Ignored if --omit_history has been chosen')
     parser.add_argument('-o', '--optimizer', type=str, default=OPTIMIZER, required=False, choices=OPTIMIZER_CHOICES,
                         help='The optimizer to be used. (default %(default)s).')
-    parser.add_argument('-lr', '--learning_rate', type=int, default=LEARNING_RATE, required=False,
+    parser.add_argument('-lr', '--learning_rate', type=float, default=LEARNING_RATE, required=False,
                         help='The learning rate for the optimizer (default %(default)s).\n')
-    parser.add_argument('-cn', '--clip_norm', type=int, default=CLIP_NORM, required=False,
+    parser.add_argument('-cn', '--clip_norm', type=float, default=CLIP_NORM, required=False,
                         help='The clip norm for the optimizer (default %(default)s).\n')
-    parser.add_argument('-cv', '--clip_value', type=int, default=CLIP_VALUE, required=False,
+    parser.add_argument('-cv', '--clip_value', type=float, default=CLIP_VALUE, required=False,
                         help='The clip value for the optimizer (default %(default)s).\n')
-    parser.add_argument('-b1', '--beta1', type=int, default=BETA1, required=False,
+    parser.add_argument('-b1', '--beta1', type=float, default=BETA1, required=False,
                         help='The beta 1 for the optimizer (default %(default)s).\n')
-    parser.add_argument('-b2', '--beta2', type=int, default=BETA2, required=False,
+    parser.add_argument('-b2', '--beta2', type=float, default=BETA2, required=False,
                         help='The beta 2 for the optimizer (default %(default)s).\n')
-    parser.add_argument('-rho', type=int, default=RHO, required=False,
+    parser.add_argument('-rho', type=int, default=float, required=False,
                         help='The rho for the optimizer (default %(default)s).\n')
-    parser.add_argument('-m', '--momentum', type=int, default=MOMENTUM, required=False,
+    parser.add_argument('-m', '--momentum', type=float, default=MOMENTUM, required=False,
                         help='The momentum for the optimizer (default %(default)s).\n')
-    parser.add_argument('-d', '--decay', type=int, default=DECAY, required=False,
+    parser.add_argument('-d', '--decay', type=float, default=DECAY, required=False,
                         help='The decay for the optimizer (default %(default)s).\n')
     parser.add_argument('-bs', '--batch_size', type=int, default=TRAIN_BATCH_SIZE, required=False,
                         help='The batch size for the optimization (default %(default)s).\n')
