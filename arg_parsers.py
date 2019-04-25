@@ -16,10 +16,13 @@ NETWORK = 'vgg'
 NETWORK_CHOICES = 'vgg', 'custom'
 
 # ---------------------------------------- TRAINING ----------------------------------------------
+START_POINT = ''
 SAVE_WEIGHTS = True
+SAVE_CHECKPOINT = True
 SAVE_HIST = True
-WEIGHTS_FILENAME = 'network_weights.h5'
-HIST_FILENAME = 'train_history.pickle'
+WEIGHTS_FILENAME = 'out/network_weights.h5'
+CHECKPOINT_FILENAME = 'out/checkpoint.h5'
+HIST_FILENAME = 'out/train_history.pickle'
 OPTIMIZER = 'rmsprop'
 OPTIMIZER_CHOICES = 'adam', 'rmsprop', 'sgd', 'adagrad', 'adadelta', 'adamax'
 LEARNING_RATE = 1E-3
@@ -96,8 +99,12 @@ def create_training_parser() -> ArgumentParser:
     parser = ArgumentParser(description='Training the custom CNN network, to be used for style transferring.',
                             epilog='Note: '
                                    'The hyperparameters will be ignored if the chosen optimizer does not use them.')
+    parser.add_argument('-sp', '--start_point', type=str, required=False, default=START_POINT,
+                        help='Filepath containing existing weights to initialize the model.')
     parser.add_argument('-ow', '--omit_weights', default=not SAVE_WEIGHTS, required=False, action='store_false',
                         help='Whether the weights should not be saved (default %(default)s).')
+    parser.add_argument('-oc', '--omit_checkpoint', default=not SAVE_CHECKPOINT, required=False, action='store_false',
+                        help='Whether the best weights checkpoint should not be saved (default %(default)s).')
     parser.add_argument('-oh', '--omit_history', default=not SAVE_HIST, required=False, action='store_false',
                         help='Whether the training history should not be saved (default %(default)s).')
     parser.add_argument('-wf', '--weights_filepath', default=WEIGHTS_FILENAME, required=False, type=str,
@@ -106,6 +113,9 @@ def create_training_parser() -> ArgumentParser:
     parser.add_argument('-hf', '--history_filepath', default=HIST_FILENAME, required=False, type=str,
                         help='Path to store the trained network\'s history (default %(default)s). '
                              'Ignored if --omit_history has been chosen')
+    parser.add_argument('-cf', '--checkpoint_filepath', default=CHECKPOINT_FILENAME, required=False, type=str,
+                        help='Path to store the trained network\'s best checkpoint(default %(default)s). '
+                             'Ignored if --omit_checkpoint has been chosen')
     parser.add_argument('-o', '--optimizer', type=str, default=OPTIMIZER, required=False, choices=OPTIMIZER_CHOICES,
                         help='The optimizer to be used. (default %(default)s).')
     parser.add_argument('-lr', '--learning_rate', type=float, default=LEARNING_RATE, required=False,
