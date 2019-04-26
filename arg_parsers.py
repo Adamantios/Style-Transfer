@@ -75,7 +75,7 @@ def create_style_transfer_parser() -> ArgumentParser:
                         help='Style weight (default %(default)s).')
     parser.add_argument('-tvw', '--tv_weight', type=float, default=TV_WEIGHT, required=False,
                         help='Total Variation weight (default %(default)s).')
-    parser.add_argument('-n', '--network', type=str, default=NETWORK, required=False, choices=NETWORK_CHOICES,
+    parser.add_argument('-n', '--network', type=str.lower, default=NETWORK, required=False, choices=NETWORK_CHOICES,
                         help='The network to be used. (default %(default)s).')
     parser.add_argument('-p', '--path', type=str, default=WEIGHTS_PATH, required=False,
                         help='The network\'s weights path. (default %(default)s).\n'
@@ -116,7 +116,8 @@ def create_training_parser() -> ArgumentParser:
     parser.add_argument('-cf', '--checkpoint_filepath', default=CHECKPOINT_FILENAME, required=False, type=str,
                         help='Path to store the trained network\'s best checkpoint(default %(default)s). '
                              'Ignored if --omit_checkpoint has been chosen')
-    parser.add_argument('-o', '--optimizer', type=str, default=OPTIMIZER, required=False, choices=OPTIMIZER_CHOICES,
+    parser.add_argument('-o', '--optimizer', type=str.lower, default=OPTIMIZER, required=False,
+                        choices=OPTIMIZER_CHOICES,
                         help='The optimizer to be used. (default %(default)s).')
     parser.add_argument('-lr', '--learning_rate', type=float, default=LEARNING_RATE, required=False,
                         help='The learning rate for the optimizer (default %(default)s).\n')
