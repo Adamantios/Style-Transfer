@@ -7,7 +7,7 @@ from keras_preprocessing.image import load_img, save_img
 from core.networks.custom_network import StyleTransferCustom
 from core.l_bfgs_optimizer import LBFGSOptimizer
 from core.networks.vgg_network import StyleTransferVGG19
-from arg_parsers import create_style_transfer_parser
+from utils import create_style_transfer_parser, create_path
 from core.loss_calculator import LossCalculator
 from PIL import Image
 
@@ -128,6 +128,9 @@ if __name__ == '__main__':
     tv_weight = args.tv_weight
     network = args.network
     path = args.path
+
+    # Create the combined_filename's path, if it does not exist.
+    create_path(combined_filename)
 
     # Load images.
     content_image = load_img(content_image_path)

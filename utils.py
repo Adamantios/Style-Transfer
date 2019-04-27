@@ -1,3 +1,4 @@
+from os import path, makedirs
 from argparse import ArgumentParser
 
 # ----------------------------------- DEFAULT ARGUMENTS ------------------------------------------
@@ -55,7 +56,9 @@ def create_style_transfer_parser() -> ArgumentParser:
     parser.add_argument('style_image_path', metavar='style', type=str,
                         help='Path to the style image.')
     parser.add_argument('combined_filename', metavar='result', type=str,
-                        help='Prefix for the saved image results.')
+                        help='Prefix for the saved image results. '
+                             'Please omit the extension, which is chosen automatically (.png). '
+                             'Creates the path to the file if it does not exist.')
     parser.add_argument('-i', '--iter', type=int, default=ITERATIONS, required=False,
                         help='Number of iterations for the optimizer (default %(default)s).\n'
                              'If --gif is passed, this is the number of iterations for each frame.')
@@ -145,3 +148,17 @@ def create_training_parser() -> ArgumentParser:
                         help='The verbosity for the optimization procedure (default %(default)s).\n')
 
     return parser
+
+
+def create_path(filepath: str) -> None:
+    """
+    Creates a path to a file, if it does not exist.
+
+    :param filepath: the filepath.
+    """
+    # Get the file's directory.
+    directory = path.dirname(filepath)
+
+    # Create directory if it does not exist
+    if not path.exists(directory):
+        makedirs(directory)

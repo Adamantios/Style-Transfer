@@ -8,7 +8,7 @@ from tensorflow.python.keras.datasets import cifar10
 from tensorflow.python.keras.optimizers import rmsprop, adam, adamax, adadelta, adagrad, sgd
 from tensorflow.python.keras.utils import to_categorical
 
-from arg_parsers import create_training_parser
+from utils import create_training_parser, create_path
 from core.networks.custom_network import StyleTransferCustom
 
 
@@ -55,13 +55,6 @@ def initialize_optimizer() -> Union[adam, rmsprop, sgd, adagrad, adadelta, adama
         return adamax(lr=learning_rate, beta_1=beta1, beta_2=beta2, decay=decay)
     else:
         raise ValueError('An unexpected optimizer name has been encountered.')
-
-
-def create_path(path):
-    directory = os.path.dirname(path)
-    # Create directory if it does not exist
-    if not os.path.exists(directory):
-        os.makedirs(directory)
 
 
 def init_callbacks() -> []:
