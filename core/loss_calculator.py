@@ -97,12 +97,8 @@ class LossCalculator(object):
 
         return K.sum(K.pow(a + b, 1.25))
 
-    def get_loss_and_grads(self) -> K.function:
-        """
-        Returns function which calculates the loss and gradient outputs.
-
-        :return: Keras function.
-        """
+    def _total_loss(self):
+        """ Calculates total loss. """
         # Initialize a loss variable as float.
         loss = 0.
 
@@ -123,6 +119,16 @@ class LossCalculator(object):
 
         # Calculate and add the total variation loss.
         loss += self._total_variation_weight * self._total_variation_loss()
+
+        return loss
+
+    def get_loss_and_grads(self) -> K.function:
+        """
+        Returns function which calculates the loss and gradient outputs.
+
+        :return: Keras function.
+        """
+        loss = self._total_loss()
 
         # Calculate the gradients of the loss with respect to the combined image.
         grads = K.gradients(loss, self._combination_image)
