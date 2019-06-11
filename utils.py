@@ -1,5 +1,5 @@
-from os import path, makedirs
 from argparse import ArgumentParser
+from os import path, makedirs
 
 # ----------------------------------- DEFAULT ARGUMENTS ------------------------------------------
 
@@ -104,11 +104,11 @@ def create_training_parser() -> ArgumentParser:
                                    'The hyperparameters will be ignored if the chosen optimizer does not use them.')
     parser.add_argument('-sp', '--start_point', type=str, required=False, default=START_POINT,
                         help='Filepath containing existing weights to initialize the model.')
-    parser.add_argument('-ow', '--omit_weights', default=not SAVE_WEIGHTS, required=False, action='store_false',
+    parser.add_argument('-ow', '--omit_weights', default=not SAVE_WEIGHTS, required=False, action='store_true',
                         help='Whether the weights should not be saved (default %(default)s).')
-    parser.add_argument('-oc', '--omit_checkpoint', default=not SAVE_CHECKPOINT, required=False, action='store_false',
+    parser.add_argument('-oc', '--omit_checkpoint', default=not SAVE_CHECKPOINT, required=False, action='store_true',
                         help='Whether the best weights checkpoint should not be saved (default %(default)s).')
-    parser.add_argument('-oh', '--omit_history', default=not SAVE_HIST, required=False, action='store_false',
+    parser.add_argument('-oh', '--omit_history', default=not SAVE_HIST, required=False, action='store_true',
                         help='Whether the training history should not be saved (default %(default)s).')
     parser.add_argument('-wf', '--weights_filepath', default=WEIGHTS_FILENAME, required=False, type=str,
                         help='Path to store the trained network\'s weights (default %(default)s). '
